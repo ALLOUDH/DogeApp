@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange_sushi">#D28140</color>
+    <color name="White_Sushi">#FEECDA</color>
+    <color name="Veige_Sushi">#f7d3a4</color>
+    <color name="brown_light">#827761</color>
+    <color name="salmon">#FFA07A</color>
 </resources>
