@@ -54,7 +54,6 @@ public class Login extends AppCompatActivity {
         edtCorreo = findViewById(R.id.edt_correo);
         edtPass = findViewById(R.id.edt_password);
         btnIniciar = findViewById(R.id.btn_IngresarUsuario);
-        btngoogle = findViewById(R.id.btn_IngresarGoogle);
         btnRegistrar = findViewById(R.id.btn_Registrar);
 
         btnIniciar.setOnClickListener(new View.OnClickListener() {
@@ -77,68 +76,6 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(Login.this,SignUp.class));
             }
         });
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        gClient = GoogleSignIn.getClient(this, gso);
-
-        Button btngoogle = findViewById(R.id.btn_IngresarGoogle);
-        btngoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInWithGoogle();
-            }
-        });
-    }
-
-    private void signInWithGoogle() {
-        Intent signInIntent = gClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                Log.e(TAG, "signInWithGoogle: error", e);
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
-        FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-                            guardardatos(usuario);
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // Error en la autenticación con Firebase utilizando las credenciales de Google
-                            Log.e(TAG, "firebaseAuthWithGoogle: error", task.getException());
-                            Toast.makeText(Login.this, "Error de autenticación", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void guardardatos(FirebaseUser usuario) {
-        Doge = FirebaseDatabase.getInstance().getReference("Usuario").child(usuario.getUid());
-        Doge.child("nombre").setValue(usuario.getDisplayName());
-        Doge.child("email").setValue(usuario.getEmail());
     }
 
     private void LoginUser(String emailUser, String passUser) {
@@ -170,6 +107,4 @@ public class Login extends AppCompatActivity {
             finish();
         }
     }
-
-
 }

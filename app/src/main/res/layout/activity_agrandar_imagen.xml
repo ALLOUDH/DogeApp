@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SubirImagen">
+    tools:context=".AgrandarImagen">
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/img_perro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/img_prueba"
+        android:background="@color/White_Sushi"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:background="@drawable/light_wave"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
 
             <TextView
@@ -24,10 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MENÚ"
-                android:layout_marginStart="155dp"
                 android:textSize="40sp"
                 android:textStyle="bold"
-                android:textColor="@color/brown_light"/>
+                android:textColor="@color/brown_light"
+                android:layout_gravity="center"/>
 
 
         </LinearLayout>
@@ -91,6 +91,7 @@
                 android:padding="5dp">
 
                 <ImageView
+                    android:id="@+id/img_favoritos"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_gravity="center"
@@ -135,6 +136,7 @@
                 android:padding="5dp">
 
                 <ImageView
+                    android:id="@+id/img_razas"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_gravity="center"
@@ -171,6 +173,7 @@
                 android:padding="5dp">
 
                 <ImageView
+                    android:id="@+id/img_imagenes"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_gravity="center"

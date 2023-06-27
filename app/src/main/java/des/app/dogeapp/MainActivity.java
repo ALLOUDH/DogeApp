@@ -13,9 +13,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-ImageView btnExit,btnVotar;
-ImageButton btnmenu;
-FirebaseAuth mAuth;
+    ImageView btnExit,btnVotar,btnfavoritos,btnrazas,btnimagenes;
+    ImageButton btnmenu;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +24,9 @@ FirebaseAuth mAuth;
         btnExit=findViewById(R.id.btn_exit);
         btnmenu=findViewById(R.id.btn_config);
         btnVotar=findViewById(R.id.btnVotar);
+        btnfavoritos = findViewById(R.id.img_favoritos);
+        btnrazas = findViewById(R.id.img_razas);
+        btnimagenes = findViewById(R.id.img_imagenes);
 
         btnVotar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +48,28 @@ FirebaseAuth mAuth;
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Config.class);
+                startActivity(intent);
+            }
+        });
+
+        btnfavoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Favoritos.class);
+                startActivity(intent);
+            }
+        });
+        btnrazas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Razas.class);
+                startActivity(intent);
+            }
+        });
+        btnimagenes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Imagenes.class);
                 startActivity(intent);
             }
         });

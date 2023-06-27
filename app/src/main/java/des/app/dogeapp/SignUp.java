@@ -97,20 +97,16 @@ public class SignUp extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             guardarDatos(user.getUid(), nombre,apellidoPa,apellidoMa,correo);
+                            Intent intent = new Intent(SignUp.this, Login.class);
+                            startActivity(intent);
+
                             Toast.makeText(SignUp.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                            gologin();
                         } else {
                             Toast.makeText(SignUp.this, "Error en el registro. Por favor, intenta de nuevo", Toast.LENGTH_SHORT).show();
 
                         }
                     }
                 });
-    }
-
-    private void gologin() {
-        Intent intent = new Intent(SignUp.this, Login.class);
-        startActivity(intent);
-        finish();
     }
 
     private void guardarDatos(String uid, String nombre, String apellidoPaterno, String apellidoMaterno,String correo) {
@@ -122,4 +118,3 @@ public class SignUp extends AppCompatActivity {
 
     }
 }
-

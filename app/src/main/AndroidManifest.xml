@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Theme.AppCompat">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -16,32 +17,40 @@
         android:theme="@style/Theme.DogeApp"
         tools:targetApi="31">
         <activity
-            android:name=".Config"
+            android:name=".AgrandarImagen"
             android:exported="false" />
         <activity
-            android:name=".SubirImagen"
-            android:exported="false" />
+            android:name=".Config"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Favoritos"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Imagenes"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Razas"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Votar"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUp"
-            android:exported="false"></activity>
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Login"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Splash"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +59,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
