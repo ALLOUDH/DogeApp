@@ -1,8 +1,8 @@
 {
   "project_info": {
     "project_number": "948751192090",
-    "project_id": "dogeapp-303c7",
     "firebase_url": "https://dogeapp-303c7-default-rtdb.firebaseio.com",
+    "project_id": "dogeapp-303c7",
     "storage_bucket": "dogeapp-303c7.appspot.com"
   },
   "client": [
@@ -28,7 +28,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "948751192090-eds3gh93smregolk8huog9t4qq0hk7lp.apps.googleusercontent.com",
+              "client_id": "948751192090-7u9mj1tifi2o12gkc42l6vp57i6j0uq6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
