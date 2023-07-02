@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/White_Sushi"
-    tools:context=".Login">
+    tools:context=".Votar">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -108,7 +108,8 @@
     android:layout_gravity="center"
     android:layout_marginTop="20dp"
     android:text="FAVORITOS"
-    android:background="@drawable/btn_bg_1"/>
+    android:background="@drawable/btn_bg_1"
+    android:onClick="call_api"/>
 
     <LinearLayout
         android:layout_width="match_parent"

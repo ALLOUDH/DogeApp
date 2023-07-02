@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/White_Sushi"
-    tools:context=".Login">
+    android:orientation="vertical"
+    tools:context=".Razas">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:background="@drawable/dark_wave">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
@@ -21,12 +22,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Razas"
                 android:layout_gravity="center"
-                android:textSize="40sp"
                 android:layout_marginTop="5dp"
-                android:textStyle="bold"
-                android:textColor="@color/brown_light"/>
+                android:text="Razas"
+                android:textColor="@color/brown_light"
+                android:textSize="40sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -37,95 +38,121 @@
         android:layout_marginRight="40dp"
         android:background="@color/White_Sushi"
         android:orientation="vertical">
+
         <ImageButton
             android:id="@+id/btn_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/White_Sushi"
-            android:src="@drawable/home_icon"/>
+            android:src="@drawable/home_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/brown_light"
-            android:text="Menú"/>
+            android:text="Menú"
+            android:textColor="@color/brown_light" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edt_nombre_ra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ingrese una raza" />
+
+        <Button
+            android:id="@+id/btn_buscar_ra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="btnBuscarRaza"
+            android:text="Buscar" />
+
         <ImageView
             android:id="@+id/img_perro_ra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/img_prueba"
-            android:background="@drawable/btn_bg_0"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+
+            />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
-        android:orientation="vertical"
-        >
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/peso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="peso"
             android:textColor="@color/brown_light"
-            android:textStyle="bold"
             android:textSize="15sp"
-            android:text="Nombre"/>
+            android:textStyle="bold" />
+
+
         <TextView
+            android:id="@+id/edad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Edad"
             android:textColor="@color/brown_light"
-            android:textStyle="bold"
             android:textSize="15sp"
-            android:text="Descripción"/>
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/raza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Raza"
             android:textColor="@color/brown_light"
-            android:textStyle="bold"
             android:textSize="15sp"
-            android:text="Edad"/>
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/altura"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Tamaño"
             android:textColor="@color/brown_light"
-            android:textStyle="bold"
             android:textSize="15sp"
-            android:text="Raza"/>
+            android:textStyle="bold" />
+
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/descripcion"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Descripción"
             android:textColor="@color/brown_light"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="Tamaño"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:rotationX="180"
         android:rotation="180"
-        >
+        android:rotationX="180">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/clear_layout">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/wave"
-                android:orientation="horizontal">
-            </LinearLayout>
+                android:orientation="horizontal"></LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
