@@ -3,13 +3,16 @@ package des.app.dogeapp.ParaImagenes;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import des.app.dogeapp.AgrandarImagen;
 import des.app.dogeapp.MainActivity;
 import des.app.dogeapp.ParaImagenes.ImageAdapter;
 import des.app.dogeapp.R;
@@ -36,7 +40,8 @@ public class Imagenes extends AppCompatActivity {
     private List<String> breedList;
     private List<String> imageUrls;
     private ImageAdapter imageAdapter;
-    ImageButton img_menu;
+    String save_image_url;
+    ImageView img_menu;
 
     private static final String API_URL = "https://api.thedogapi.com/v1/breeds";
     private static final String API_IMAGES_URL = "https://api.thedogapi.com/v1/images/search";
@@ -49,7 +54,7 @@ public class Imagenes extends AppCompatActivity {
 
         spinner = findViewById(R.id.spinner);
         recyclerView = findViewById(R.id.recyclerView);
-        img_menu=findViewById(R.id.btn_menu);
+        img_menu = findViewById(R.id.btn_menu);
 
         breedList = new ArrayList<>();
         imageUrls = new ArrayList<>();
@@ -59,8 +64,8 @@ public class Imagenes extends AppCompatActivity {
 
         imageAdapter = new ImageAdapter(this, imageUrls);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         recyclerView.setAdapter(imageAdapter);
-
 
         img_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +88,7 @@ public class Imagenes extends AppCompatActivity {
         });
 
         new FetchBreedsTask().execute();
+
     }
 
     private class FetchBreedsTask extends AsyncTask<Void, Void, List<String>> {
@@ -99,6 +105,7 @@ public class Imagenes extends AppCompatActivity {
 
                 InputStream inputStream = connection.getInputStream();
                 String result = convertInputStreamToString(inputStream);
+
 
                 JSONArray jsonArray = new JSONArray(result);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -127,26 +134,30 @@ public class Imagenes extends AppCompatActivity {
         protected List<String> doInBackground(String... strings) {
             List<String> urls = new ArrayList<>();
             String breedName = strings[0];
-            String breedId = getBreedId(breedName);
+            List<String> breedIds = getBreedIds(breedName);
 
-            if (breedId == null) {
+            if (breedIds.isEmpty()) {
                 return urls;
             }
 
             try {
-                URL url = new URL(API_IMAGES_URL + "?breed_ids=" + breedId);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty("x-api-key", API_KEY);
-                connection.connect();
+                for (String breedId : breedIds) {
+                    URL url = new URL(API_IMAGES_URL + "?breed_id=" + breedId + "&limit=10");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestProperty("x-api-key", API_KEY);
+                    connection.connect();
 
-                InputStream inputStream = connection.getInputStream();
-                String result = convertInputStreamToString(inputStream);
+                    InputStream inputStream = connection.getInputStream();
+                    String result = convertInputStreamToString(inputStream);
+                    Log.d("API Response", result);
 
-                JSONArray jsonArray = new JSONArray(result);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String imageUrl = jsonObject.getString("url");
-                    urls.add(imageUrl);
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String imageUrl = jsonObject.getString("url");
+                        urls.add(imageUrl);
+                        save_image_url = imageUrl;
+                    }
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -163,15 +174,40 @@ public class Imagenes extends AppCompatActivity {
         }
     }
 
-    private String getBreedId(String breedName) {
-        int position = breedList.indexOf(breedName);
-        if (position != -1) {
-            return String.valueOf(position + 1);
+    private List<String> getBreedIds(String breedName) {
+        List<String> breedIds = new ArrayList<>();
+        for (String breed : breedList) {
+            if (breed.equalsIgnoreCase(breedName)) {
+                int position = breedList.indexOf(breed);
+                String breedId = getBreedIdFromAPI(position + 0);
+                if (breedId != null) {
+                    breedIds.add(breedId);
+                }
+            }
+        }
+        return breedIds;
+    }
+
+    private String getBreedIdFromAPI(int position) {
+        try {
+            URL url = new URL(API_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("x-api-key", API_KEY);
+            connection.connect();
+
+            InputStream inputStream = connection.getInputStream();
+            String result = convertInputStreamToString(inputStream);
+
+            JSONArray jsonArray = new JSONArray(result);
+            if (position >= 0 && position < jsonArray.length()) {
+                JSONObject jsonObject = jsonArray.getJSONObject(position);
+                return jsonObject.getString("id");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
         return null;
     }
-
-
 
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();

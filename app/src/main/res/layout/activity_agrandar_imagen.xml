@@ -10,6 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/img_prueba"
-        android:background="@color/White_Sushi"/>
+        style="@style/BACKGROUD_DAY"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

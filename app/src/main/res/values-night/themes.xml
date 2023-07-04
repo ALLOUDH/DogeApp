@@ -1,10 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DogeApp" parent="Theme.Material3.Dark.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/brown_light</item>
     </style>
     <style name="AppTheme.Light" parent="Theme.AppCompat.NoActionBar">
         <!-- Personaliza los colores y atributos para el modo claro aquí -->
     </style>
+    <style name="BACKGROUD_DAY">
+        <item name="android:background">#887B64</item>
+    </style>
+
 </resources>

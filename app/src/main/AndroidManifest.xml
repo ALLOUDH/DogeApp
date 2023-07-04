@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -16,13 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DogeApp"
         tools:targetApi="31">
+
         <activity
-            android:name=".Votar"
-            android:exported="true"
-            android:screenOrientation="portrait" >
-
-        </activity>
-
+            android:name=".ParaImagenes.Imagenes"
+            android:exported="false" />
         <activity
             android:name=".AgrandarImagen"
             android:exported="false" />
@@ -35,17 +34,17 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ParaImagenes.Imagenes"
-            android:exported="true"
+            android:name=".Razas"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Razas"
+            android:name=".Votar"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SignUp"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Login"
             android:exported="false"
@@ -56,7 +55,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

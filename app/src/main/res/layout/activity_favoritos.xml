@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/White_Sushi"
+    style="@style/BACKGROUD_DAY"
     tools:context=".Login">
 
     <LinearLayout
@@ -36,56 +36,18 @@
         android:gravity="right"
         android:layout_marginRight="40dp"
         android:layout_marginTop="-20dp"
-        android:background="@color/White_Sushi"
         android:orientation="vertical">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/White_Sushi"
             android:src="@drawable/home_icon"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/brown_light"
             android:text="Menú"/>
-
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:textColor="@color/brown_light"
-        android:layout_marginRight="30dp"
-        android:textStyle="bold"
-        android:layout_marginLeft="30dp"
-        android:textSize="20sp"
-        android:text="ORDEN"
-        android:layout_marginBottom="5dp"/>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/btn_bg_0"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ascendente"
-            android:textStyle="bold"
-            android:textColor="@color/text_color_dark"
-            android:textSize="18sp"
-            android:layout_marginLeft="20dp"/>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"/>
 
     </LinearLayout>
     <TextView
@@ -97,45 +59,38 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textColor="@color/brown_light"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp">
+        android:orientation="horizontal">
 
-        <view class="androidx.appcompat.app.AlertController$RecycleListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_fav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </view>
-
-
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:rotationX="180"
         android:rotation="180"
-        >
+        android:rotationX="180"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/clear_layout">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/wave"
-                android:orientation="horizontal">
-            </LinearLayout>
+            android:layout_height="100dp"
+            android:background="@drawable/clear_layout"
+            android:layout_gravity="bottom">
         </LinearLayout>
-
-
     </LinearLayout>
+
 </LinearLayout>

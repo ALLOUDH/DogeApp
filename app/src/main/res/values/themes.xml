@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DogeApp" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <!-- Personaliza los colores y atributos para el modo oscuro aquí -->
     </style>
     <style name="Theme.DogeApp" parent="Base.Theme.DogeApp" />
+    <style name="BACKGROUD_DAY">
+        <item name="android:background">@color/White_Sushi</item>
+    </style>
 </resources>

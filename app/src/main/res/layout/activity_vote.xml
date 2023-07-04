@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/White_Sushi"
+    style="@style/BACKGROUD_DAY"
     tools:context=".Votar">
 
     <LinearLayout
@@ -35,13 +35,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="40dp"
-        android:background="@color/White_Sushi"
         android:orientation="vertical">
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/White_Sushi"
             android:src="@drawable/home_icon"/>
         <TextView
             android:layout_width="wrap_content"
@@ -52,17 +50,17 @@
     </LinearLayout>
 
 <LinearLayout
-    android:layout_width="300dp"
-    android:layout_height="300dp"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
     android:layout_gravity="center"
     android:orientation="vertical"
-    >
+    android:background="@drawable/btn_bg_0">
     <ImageView
         android:id="@+id/img_perro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:src="@drawable/img_prueba"/>
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,6 +100,7 @@
     </LinearLayout>
 
 <Button
+    android:id="@+id/btn_favoritos"
     android:layout_width="130dp"
     android:layout_height="wrap_content"
     android:textColor="@color/brown_light"
@@ -115,8 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:rotationX="180"
-        android:rotation="180"
-        >
+        android:rotation="180">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

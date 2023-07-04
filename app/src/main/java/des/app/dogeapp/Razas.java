@@ -34,13 +34,13 @@ import des.app.dogeapp.R;
 public class Razas extends AppCompatActivity {
 
     private Spinner spnRaza;
-    ImageButton btnMenu;
+    ImageView btnMenu;
     private ImageView imgPerro;
     private TextView txtRaza, txtCriadoPara, txtGrupoRaza, txtVida, txtTemperamento, txtOrigen;
 
     private List<String> breedList;
     private ArrayAdapter<String> adapter;
-    private String selectedBreed;
+    private String selectedBreed,Save_Url;
 
     private static final String API_URL = "https://api.thedogapi.com/v1/breeds";
     private static final String API_IMAGES_URL = "https://api.thedogapi.com/v1/images/search";
@@ -87,6 +87,16 @@ public class Razas extends AppCompatActivity {
         });
 
         new Razas.FetchBreedsTask().execute();
+
+        imgPerro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Razas.this, AgrandarImagen.class);
+                intent.putExtra("url_imagen",Save_Url);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private class FetchBreedsTask extends AsyncTask<Void, Void, List<String>> {
@@ -206,6 +216,7 @@ public class Razas extends AppCompatActivity {
                 if (imageArray.length() > 0) {
                     JSONObject imageObject = imageArray.getJSONObject(0);
                     imageUrl = imageObject.optString("url");
+                    Save_Url = imageUrl;
                 }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
