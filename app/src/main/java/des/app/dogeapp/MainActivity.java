@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import des.app.dogeapp.ParaImagenes.Imagenes;
+
 public class MainActivity extends AppCompatActivity {
     ImageView btnExit,btnVotar,btnfavoritos,btnrazas,btnimagenes;
     ImageButton btnmenu;
@@ -75,4 +77,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }

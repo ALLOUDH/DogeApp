@@ -1,111 +1,239 @@
 package des.app.dogeapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-import des.app.dogeapp.Peticiones.Raza;
+
+
+import des.app.dogeapp.R;
 
 public class Razas extends AppCompatActivity {
 
-    ImageView imagenPerro, btnMenu;
-    EditText inputRaza;
-    TextView txtRaza, txtAltura, txtEdad, txtDescripcion, txtPeso;
+    private Spinner spnRaza;
+    ImageButton btnMenu;
+    private ImageView imgPerro;
+    private TextView txtRaza, txtCriadoPara, txtGrupoRaza, txtVida, txtTemperamento, txtOrigen;
+
+    private List<String> breedList;
+    private ArrayAdapter<String> adapter;
+    private String selectedBreed;
+
+    private static final String API_URL = "https://api.thedogapi.com/v1/breeds";
+    private static final String API_IMAGES_URL = "https://api.thedogapi.com/v1/images/search";
+    private static final String API_KEY = "AIzaSyD07SXCPDYkE8Hhf2XGywgYkjuT8xrUSxE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_razas);
-        btnMenu = findViewById(R.id.btn_menu);
 
-        inputRaza = findViewById(R.id.edt_nombre_ra);
-        imagenPerro = findViewById(R.id.img_perro_ra);
-
-        txtPeso = findViewById(R.id.peso);
-        txtDescripcion = findViewById(R.id.descripcion);
-        txtEdad = findViewById(R.id.edad);
-        txtRaza = findViewById(R.id.raza);
-        txtAltura = findViewById(R.id.altura);
-
-        imagenPerro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Razas.this, AgrandarImagen.class);
-                startActivity(i);
-            }
-        });
+        spnRaza = findViewById(R.id.spnRaza);
+        imgPerro = findViewById(R.id.imgPerroRaza);
+        txtRaza = findViewById(R.id.txt_nombre);
+        txtCriadoPara = findViewById(R.id.txtCriadoPara);
+        txtGrupoRaza = findViewById(R.id.txtGrupoRaza);
+        txtVida = findViewById(R.id.txtVida);
+        txtTemperamento = findViewById(R.id.txtTemperamento);
+        txtOrigen = findViewById(R.id.txtOrigen);
+        btnMenu=findViewById(R.id.btn_menu);
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Razas.this, MainActivity.class);
-                startActivity(i);
+            public void onClick(View v) {
+                Intent intent = new Intent(Razas.this,MainActivity.class);
+                startActivity(intent);
             }
         });
+
+        breedList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, breedList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnRaza.setAdapter(adapter);
+
+        spnRaza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                selectedBreed = breedList.get(position);
+                new Razas.FetchBreedDetailsTask().execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        new Razas.FetchBreedsTask().execute();
     }
 
-    public void btnBuscarRaza(View view) {
-        String url = "https://api.thedogapi.com/v1/breeds/search?q=" + inputRaza.getText().toString().toLowerCase();
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+    private class FetchBreedsTask extends AsyncTask<Void, Void, List<String>> {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            List<String> breeds = new ArrayList<>();
 
-                Gson gson = new Gson();
-                Type dogListType = new TypeToken<List<Raza>>() {
-                }.getType();
-                List<Raza> perro = gson.fromJson(response, dogListType);
+            try {
+                URL url = new URL(API_URL);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("x-api-key", API_KEY);
+                connection.connect();
 
-                if (perro.get(0).getReferenceImageId() == null) {
-                    Toast.makeText(Razas.this, "No tiene imagen", Toast.LENGTH_SHORT).show();
+                InputStream inputStream = connection.getInputStream();
+                String result = convertInputStreamToString(inputStream);
+
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String breedName = jsonObject.getString("name");
+                    breeds.add(breedName);
                 }
-
-                String peso = perro.get(0).getWeightMetric();
-                String descripcion = perro.get(0).getTemperament();
-                String edad = perro.get(0).getLifeSpan();
-                String raza = perro.get(0).getName();
-                String altura = perro.get(0).getHeightImperial();
-
-                txtPeso.append(peso);
-                txtEdad.append(edad);
-                txtRaza.append(raza);
-                txtAltura.append(altura);
-                txtDescripcion.append(descripcion);
-
-                System.out.println("Peso: " + peso);
-                System.out.println("Descripcion: " + descripcion);
-                System.out.println("Edad: " + edad);
-                System.out.println("Raza: " + raza);
-                System.out.println("Altura: " + altura);
-
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Razas.this, "Hubo un error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(stringRequest);
 
+            return breeds;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> breeds) {
+            breedList.clear();
+            breedList.addAll(breeds);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    private class FetchBreedDetailsTask extends AsyncTask<Void, Void, JSONObject> {
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            JSONObject breedDetails = null;
+
+            try {
+                String breedSearchUrl = API_URL + "/search?q=" + selectedBreed.replace(" ", "%20");
+
+                URL url = new URL(breedSearchUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("x-api-key", API_KEY);
+                connection.connect();
+
+                InputStream inputStream = connection.getInputStream();
+                String result = convertInputStreamToString(inputStream);
+
+                JSONArray breedDetailsArray = new JSONArray(result);
+                if (breedDetailsArray.length() > 0) {
+                    breedDetails = breedDetailsArray.getJSONObject(0);
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return breedDetails;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject breedDetails) {
+            if (breedDetails != null) {
+                try {
+                    String nombre = breedDetails.getString("name");
+                    String criadoPara = breedDetails.optString("bred_for");
+                    String grupoRaza = breedDetails.optString("breed_group");
+                    String esperanzaVida = breedDetails.optString("life_span");
+                    String Temperamento = breedDetails.optString("temperament");
+                    String Origen = breedDetails.optString("origin");
+                    String breedId = breedDetails.optString("id");
+
+                    txtRaza.setText("Nombre: " + nombre);
+                    txtCriadoPara.setText("Criado para: " + criadoPara);
+                    txtGrupoRaza.setText("Grupo de raza: " + grupoRaza);
+                    txtVida.setText("Esperanza de vida: " + esperanzaVida);
+                    txtTemperamento.setText("Temperamento: " + Temperamento);
+                    txtOrigen.setText("Origen: " + Origen);
+
+                    if (breedId != null && !breedId.isEmpty()) {
+                        new Razas.FetchBreedImageTask().execute(breedId);
+                    } else {
+                        imgPerro.setImageDrawable(null);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private class FetchBreedImageTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String imageUrl = null;
+            String breedId = strings[0];
+
+            try {
+                URL url = new URL(API_IMAGES_URL + "?breed_ids=" + breedId);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("x-api-key", API_KEY);
+                connection.connect();
+
+                InputStream inputStream = connection.getInputStream();
+                String result = convertInputStreamToString(inputStream);
+
+                JSONArray imageArray = new JSONArray(result);
+                if (imageArray.length() > 0) {
+                    JSONObject imageObject = imageArray.getJSONObject(0);
+                    imageUrl = imageObject.optString("url");
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return imageUrl;
+        }
+
+        @Override
+        protected void onPostExecute(String imageUrl) {
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Picasso.get().load(imageUrl).into(imgPerro);
+            } else {
+                imgPerro.setImageDrawable(null);
+            }
+        }
+    }
+
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        byte[] buffer = new byte[1024];
+
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            stringBuilder.append(new String(buffer, 0, length));
+        }
+
+        inputStream.close();
+        return stringBuilder.toString();
     }
 }

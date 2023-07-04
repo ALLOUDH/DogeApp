@@ -6,39 +6,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/White_Sushi"
-    tools:context=".Login">
+    tools:context=".Votar">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
         android:background="@drawable/dark_wave">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="110dp"
             android:background="@drawable/light_wave"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favoritos"
+                android:text="VOTAR"
+                android:layout_gravity="center"
                 android:textSize="40sp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:textStyle="bold"
-                android:textColor="@color/brown_light"
-                android:gravity="center"/>
+                android:textColor="@color/brown_light"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:layout_gravity="right"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="-20dp"
         android:background="@color/White_Sushi"
         android:orientation="vertical">
-
         <ImageButton
             android:id="@+id/btn_menu"
             android:layout_width="wrap_content"
@@ -52,71 +50,67 @@
             android:text="Menú"/>
 
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:textColor="@color/brown_light"
-        android:layout_marginRight="30dp"
-        android:textStyle="bold"
-        android:layout_marginLeft="30dp"
-        android:textSize="20sp"
-        android:text="ORDEN"
-        android:layout_marginBottom="5dp"/>
-
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/btn_bg_0"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ascendente"
-            android:textStyle="bold"
-            android:textColor="@color/text_color_dark"
-            android:textSize="18sp"
-            android:layout_marginLeft="20dp"/>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"/>
-
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/img_perro"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/img_prueba"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Todos los resultados"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:textColor="@color/brown_light"
-        android:textSize="20sp"/>
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp">
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_vote"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/vote_img"
+                android:layout_gravity="center"/>
+        </LinearLayout>
 
-        <view class="androidx.appcompat.app.AlertController$RecycleListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </view>
-
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_vote_dislike"
+            android:orientation="vertical"
+            android:layout_marginLeft="40dp">
+            <ImageView
+                android:id="@+id/img_dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/vote_img"
+                android:rotationX="180"
+                android:layout_gravity="center"/>
+        </LinearLayout>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_favoritos"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/brown_light"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="FAVORITOS"
+        android:background="@drawable/btn_bg_1"
+        android:onClick="call_api"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -135,7 +129,5 @@
                 android:orientation="horizontal">
             </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
 </LinearLayout>
